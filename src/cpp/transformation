@@ -1,0 +1,29 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool dfs(long long a, long long b, vector<long long> &v) {
+    if (a > b) return false;
+    if (a == b) {
+        v.push_back(a);
+        return true;
+    }
+    v.push_back(a);
+    if (dfs(a * 2, b, v)) return true;
+    if (dfs(a * 10 + 1, b, v)) return true;
+    v.pop_back();
+    return false;
+}
+
+int transformation() {
+    long long a, b;
+    cin >> a >> b;
+    vector<long long> v;
+    if (dfs(a, b, v)) {
+        cout << "YES" << endl << v.size() << endl;
+        for (auto i : v) cout << i << " ";
+        cout << endl;
+    } else {
+        cout << "NO" << endl;
+    }
+    return 0;
+}
