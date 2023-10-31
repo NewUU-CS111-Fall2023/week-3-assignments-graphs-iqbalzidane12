@@ -6,6 +6,10 @@
 
 #include <iostream>
 #include "task_1.h"
+#include "maze_spikes"
+#include "transformation"
+#include "berland_genome"
+#include "tagtag_game"
 
 int main() {
     std::cout << "Task 1" << std::endl;
