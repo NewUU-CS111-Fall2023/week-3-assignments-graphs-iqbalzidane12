@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int MAXN = 40;
+vector<int> adj[MAXN];
+char maze[MAXN][MAXN];
+int visited[MAXN][MAXN];
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, 1, 0, -1};
+int n, m, j;
+
+bool is_valid(int x, int y) {
+    return 0 <= x && x < n && 0 <= y && y < m;
+}
+
+void dfs(int x, int y, int spikes) {
+    if (!is_valid(x, y) || maze[x][y] == '#' || visited[x][y] <= spikes)
+        return;
+    if (maze[x][y] == 's')
+        spikes++;
+    if (spikes > j)
+        return;
+    visited[x][y] = spikes;
+    for (int i = 0; i < 4; i++)
+        dfs(x + dx[i], y + dy[i], spikes);
+}
+
+int main() {
+    cin >> n >> m >> j;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            cin >> maze[i][j];
+
+    memset(visited, -1, sizeof(visited));
+    int start_x = -1, start_y = -1, end_x = -1, end_y = -1;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (maze[i][j] == '@') {
+                if (start_x == -1) {
+                    start_x = i;
+                    start_y = j;
+                } else {
+                    end_x = i;
+                    end_y = j;
+                }
+            }
+        }
+    }
+
+    dfs(start_x, start_y, 0);
+    cout << (visited[end_x][end_y] != -1 ? "SUCCESS" : "IMPOSSIBLE") << endl;
+
+    return 0;
+}
