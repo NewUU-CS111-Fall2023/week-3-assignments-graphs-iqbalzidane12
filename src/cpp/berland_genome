@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> g[26];
+bool used[26];
+vector<int> ans;
+
+void dfs(int v) {
+    used[v] = true;
+    for (int to : g[v]) {
+        if (!used[to]) {
+            dfs(to);
+        }
+    }
+    ans.push_back(v);
+}
+
+int berland_genome() {
+    int n;
+    cin >> n;
+    vector<string> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j + 1 < a[i].size(); ++j) {
+            g[a[i][j] - 'a'].push_back(a[i][j + 1] - 'a');
+        }
+    }
+    for (int i = 0; i < 26; ++i) {
+        if (!used[i]) {
+            dfs(i);
+        }
+    }
+    reverse(ans.begin(), ans.end());
+    for (int v : ans) {
+        cout << char(v + 'a');
+    }
+    return 0;
+}
